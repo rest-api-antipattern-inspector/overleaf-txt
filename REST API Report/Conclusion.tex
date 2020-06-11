@@ -1,0 +1,21 @@
+\section{Conclusion}
+
+In this study, we analysed API endpoints against a set of rules for detecting patterns and antipatterns in REST APIs to find a relationship between linguistic and design quality. We produced results that covered 326 endpoints over ten major APIs. 
+
+The aim of this study has been to increase the awareness of these quality issues for those who develops REST APIs, and mainly public REST APIs that other developers uses to integrate into their applications. 
+
+Our result indicates a moderate positive relationship between the  CRUDy URIs linguistic antipattern and the  Misusing Cookies design antipattern, which also means that there is a moderate negative relationship between the corresponding pattern of CRUDy URIs which is Verbless URIs and Misusing Cookies. To connect back to the problem formulation and motivation from the first chapter, this can serve as an eye opener for both REST API developers and developers using REST API, occurrences of CRUDy URIs could indicate a heightened risk of Misusing Cookies, and vice versa. 
+
+One cannot conclude from our result if this is a causal relationship, but this can highlight the importance for API developers to avoid having any of these antipatterns end up in the API. For users of an API discovering one of these antipatterns, this might make them want to consider using an alternative API or at least be aware of the heightened risk of the other antipattern type. 
+
+Apart from the moderate relationships mentioned above, there were only weak and negligible relationships found. The design antipattern Breaking Self-descriptiveness (using non-standard headers) were found among almost all endpoints, but all the other antipatterns were only discovered in a minority of endpoints. 
+
+There was a lower occurrence of most antipatterns in our result compared to earlier research by Palma et al. \cite{design}, \cite{linguistic}. This could mean that APIs have gotten better at following RESTful patterns. Many APIs are perhaps nowadays using frameworks that automatically ensure they are following many standard RESTful patterns.
+
+\subsection{Future Work}
+
+To make our result more reliable, there is a need for verifying some of the detection methods used. Most notably Non-hierarchical Nodes and Forgetting Hypermedia. The reason for this is that Forgetting Hypermedia is hard to make a 100\% good script for detection of this antipattern. Looking for object keys in the body that contains "url","links" and their synonyms might be to loose since these fields could contain values that do not point to other resources within the API. 
+
+Since our detection of Non-hierarchical Nodes differed so much from Palma et al. \cite{linguistic} result there must be a raised concern that this detection algorithm might need some more verification before used. Or, at least some investigation why they got such high detection rate using the same tool.
+
+Another way for making the results more reliable would be to include more APIs and endpoints. 326 endpoints where used in this study over ten different APIs. There is another research being conducted that look for relation between linguistic quality and design quality in Googles APIs. That study used its own methods for design antipattern detection. A comparison of their results with this research to validate each others detection functions could be made. Also the combined findings from both of these studies might produced a more accurate result.

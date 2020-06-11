@@ -1,0 +1,20 @@
+\section{Discussion}
+
+\subsection{Antipattern Analysis}
+
+There a lot of endpoints with Breaking Self-descriptiveness antipattern (almost all of them except four in the Nasa API). From our result, we can see a lot of APIs uses their own standard headers. A common custom header is for instance x-rate-limit that is common for a lot of the APIs and all their endpoints. It used for measuring how many request a client has made towards the API. 
+
+The purpose of not inventing custom headers are so that developers using the API can understand the API better. They should not be forced to learn new rules and types of headers and their use case. Since so many endpoints had this antipattern one might question whether or not the rules for detecting these are to strict. For instance, there might be a bigger fault to use a custom header if the purpose of this header is the same as a standard one. There are no standard header for determining the request limit towards an API so it might be the most natural solution to introduce a new custom header. Custom headers should always be prefixed by x-. 
+
+There are no endpoints having the Non-hierarchical Nodes antipattern. Comparing our findings of linguistic antipatterns with Palma et al. \cite{linguistic}, we see that they measured as high as 56\% of the endpoints to contain the Non-hierarchical Nodes antipattern. We used the same program for detection SARA \cite{linguistic}. There is a possibility that there might have been a change in the implementation since then which we are not aware of. Another possibility is that there is to few nodes (words between the slashes node1/node2) in our endpoints to measure any meaningful hierarchy.
+
+\subsection{Patterns Analysis}
+
+There were no indications of significant relationships between each pair of design pattern \textit{vs.} linguistic pattern, or design patterns \textit{vs.} linguistic antipatterns, or linguistic pattern \textit{vs.} design antipattern. There was only a weak positive relationship between Amorphous URIs and Content Negotiation. We used three design patterns and five linguistic patterns. Since, two out of three of the design patterns - Response Caching and Entity Linking - had 100\% coverage of the endpoints tested the result will not yield any strong relations. Since, Content Negotiation was the only design pattern which did not have 100\% coverage it was the only one that could bring any meaningful relations when running the Phi coefficient tests. They also had a weak positive relation with Amorphous URIs.
+
+Since, Hierarchical nodes are determined by Non-hierarchical Nodes antipattern reversed there might be a different result from this if we investigate the reliability of the detection method. As mentioned in previous subsection the SARA algorithm for detecting this antipattern might no longer work as expected since previous research by Palma et al. \cite{linguistic} showed a much higher detection for this antipattern.
+
+For Entity Linking which looks for relational resources to an endpoint yielded no antipatterns (Forgetting Hypermedia). This pattern also had a 100\% coverage. There might be reason to see if the detection of the antipattern is to loose. This is one of the harder antipatterns to detect by scripting so there might be reason to verify these results manually. Ignoring Caching was not detected as an antipattern and so the Response Caching pattern had a 100\% coverage. That all the APIs seem to conform to standard caching techniques might be less surprising since no public API want to be burdened by unnecessary requests.  
+
+\clearpage
+\newpage

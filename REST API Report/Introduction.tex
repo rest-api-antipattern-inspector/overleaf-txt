@@ -1,0 +1,150 @@
+\section{Introduction}
+
+\subsection{Background}
+REST (REpresentational State Transfer) is often used for designing HTTP-based APIs and have become increasingly common since its introduction by Fielding in the year 2000. REST describes a standardized approach for communication \cite{restdissertation}.
+
+There are multiple aspects of REST design, and previous research by Palma et al. looked into two categories, i.e., linguistic quality and design quality \cite{design}\cite{linguistic}.
+
+\subsection{REST Linguistic Quality}
+
+REST linguistic quality is for HTTP resources about URIs. It is important that URIs are designed in a good and clear way that is easy to read and understand according to standard best practice recommendations of REST. This is to enable and simplify communications \cite{restdissertation}\cite{linguistic}. 
+
+
+One aspect of linguistic quality is linguistic antipatterns. Arnaoudova et al. described linguistic antipatterns as the deviation from the best practices for the designing URIs \cite{arnaoudova}. Another aspect of linguistic quality is linguistic patterns which is described by Palma et al. as the opposite of antipatterns, i.e., when best practice has been adhered and the URIs are correctly designed. A lack of linguistic antipatterns and a presence of linguistic patterns results in a good linguistic quality. Both linguistic patterns and antipatterns are therefore aspects of linguistic quality \cite{linguistic}.
+
+There are multiple linguistic patterns and antipatterns \cite{linguistic}. In this study, we will not focus on all of them, we will focus on five linguistic patterns and five linguistic antipatterns. These will be described detail with rules for approaches for detecting them in Tables \ref{tab:Rulesforlinguisticantipatterns} and \ref{tab:Rulesforlinguisticpatterns}. %The reason we selected these was partially because these have central roles and are important but also because we assessed that it would be feasible within the scope of this study for us to  develop processes to identify and detect these.
+
+The aspects of linguistic quality we will focus on are mainly that nodes in URIs should be within the same context, nodes should not contain symbols that obstruct readability, and nodes should be hierarchically ordered. Besides, nodes should use singular or plural words in a consistent way based on the HTTP method used and the nodes should not contain words that describe the action performed by the request instead that should depend on which HTTP method has been used \cite{linguistic}. 
+
+
+\subsection{REST Design Quality}
+
+Another aspect of REST as described by Palma et al. is about the design quality. Beyond the linguistic aspect of URIs being properly designed, another important aspect of communication in REST is that the metadata in the requests and responses adhere to the best practices to enable as well as simplify the communications \cite{restdissertation}\cite{design}.
+
+Likewise in linguistic quality, there are multiple aspects of design quality \cite{design}, and we will not focus on all of them in this study. We will focus on six design antipatterns and three design patterns. These have been selected because of their importance but also because of practical reasons because we assessed that it would be feasible to be able to develop processes to identify and detect those within the scope of this study. In this study, these design antipatterns and patterns we have chosen to focus on will be described in Tables \ref{tab:RulesfordetectingRESTdesignantipatterns} and \ref{tab:RulesforRESTdesignpatterns}. 
+
+Some aspects of design quality that we will focus on that are about enabling effective communications are the following:
+
+\begin{itemize}
+    \item Requests and responses should only use standard headers \cite{design}. 
+    \item Response bodies of GET requests should contain links to relevant resources and response bodies of POST request should contain that or a Location header \cite{design}.
+    \item Responses should contain a correct status code and status text that are of a valid combination based on the HTTP method used \cite{design}.
+    \item Servers should preferably be able to offer responses in multiple different standardized file types with the aid of MIME Type specifications. Requests should specify Accepted MIME Types and the server should preferably be able to offer a requested MIME Type. The MIME Types should also be standardized ones \cite{design}.
+    \item Caching should be enabled \cite{restdissertation}\cite{design}.
+    \item REST communications should be stateless and no types of cookie headers should therefore be used \cite{restdissertation}\cite{design}.
+\end{itemize}
+
+Another aspect of design quality that has been studied in previous research by Palma et al. is that one in HTTP communications should utilize the different variations of HTTP methods that are available and to not only use GET and/or POST \cite{design}. This is related to linguistic quality, the action performed by the request should not depend on the URI, it should instead depend on the HTTP method \cite{linguistic}\cite{design}. But because of a lack of time, resources and because of other practical reasons, we have chosen to not focus on the detection of this particular aspect of design quality in this study. 
+
+
+\subsection{Relation between Linguistic and Design Quality}
+
+Previous research on linguistic and design quality in REST APIs conducted by Palma et al. has shown that poor quality of both categories is common \cite{linguistic}\cite{design}. Because of this, it is interesting to study if there is a statistical relation between them.
+
+
+\subsection{Related Work}
+
+Previous research conducted by Palma et al. has looked into the design and linguistic quality of public APIs and has shown that poor quality of both categories is not uncommon \cite{design}\cite{linguistic}.
+
+Searching for the following phrases in Google Scholar, ACM Digital Library, and IEEE Xplore Digital Library for articles about this topic is shown in Table \ref{tab:Resultofrelatedworksearch}.
+
+\begin{table}[!ht]
+\begin{center}
+\begin{tabular}{| c | c | c |}
+\hline \textbf{Search phrase} & \textbf{date} & \textbf{result} \\
+\hline 
+correlation linguistic design antipatterns REST &
+2020-03-18 & 
+no findings
+\\ \hline
+correlation linguistic antipatterns REST &
+2020-03-18 &
+no findings
+\\ \hline
+relation linguistic antipatterns REST &
+2020-03-30 & 
+no findings
+\\ \hline
+\end{tabular}
+ \caption{Results on related work search.}
+ \label{tab:Resultofrelatedworksearch}
+\end{center}
+\end{table}
+
+
+No studies were found that are about this specific topic, i.e., if there is a relation between linguistic quality and design quality in RESTful APIs. However, while this study is being made, another study is being conducted which is about if there is a relation between linguistic quality and design quality in Google APIs. Google APIs will therefore be excluded from this study.
+
+\subsection{Problem formulation}
+The aim of this study is to investigate if there is relation between  linguistic quality and design quality in widely used REST APIs. Antipatterns which decrease the quality has been detected in earlier research by Palma et al. \cite{linguistic}\cite{design} but finding a relationship between design and linguistic quality has not been done in earlier research. We will use the same rules for detection as described by Palma et al. \cite{linguistic} \cite{design}.
+
+
+\subsection{Motivation}
+Currently, there are numerous APIs available ranging from all kinds of categories imaginable. With this huge diversity, there is a need for standardization to make the developers recognize how to use each API. APIs that are not following the standard might be difficult to understand and developers might choose other APIs that do follow the standard.
+
+This research is meant raise the awareness of antipatterns in APIs, and encourage the use of design and linguistic patterns. 
+
+\subsection{Objectives}
+
+
+\begin{table}[!ht]
+\begin{center}
+\begin{tabular} {|p{1.2cm}|p{11.6cm}|} \hline
+\textbf{O1} & Decide which linguistic and design antipatterns should be included in the research. \\ \hline
+\textbf{O2} & List APIs and endpoints to use in the research. \\ \hline
+\textbf{O3} & Use pre-existing Java-based tool to detect linguistic antipatterns among the endpoints \\ \hline
+\textbf{O4} & Setup a server application written in Node.js to call the APIs. \\ \hline
+\textbf{O5} & Implement functionality to automatically detect violations of RESTful design principles.\\ \hline
+\textbf{O6} & Investigate the relation between linguistic quality and design quality in the APIs chosen. \\ \hline
+\end{tabular}
+ \caption{Objectives of research.}
+ \label{tab:Objectives}
+\end{center} 
+\end{table}
+
+\subsection{Scope/Limitation}
+The APIs used in this study are partly from the APIs set used by Palma et al. \cite{linguistic} (see Table \ref{tab:APIsusedintheresearch}). Google APIs will be excluded since another study similar to this is being conducted but exclusively about Google APIs. How endpoints will be selected is discussed in Section \ref{Reliability and Validity} about reliability and validity in the Method.
+
+
+\subsection{Research Questions}
+The research questions below will be answered in order to achieve our objectives. These research questions are similar to the ones used by another student group who is conducting a study similar to ours, but their study is exclusively on Google APIs. 
+
+\begin{itemize}
+\item \textbf{RQ1:} \textbf{Is there a relation between design- and linguistic quality in RESTful APIs?}
+
+Our aim is to investigate if occurrence of design antipatterns (or patterns) increase the likelihood of occurrence of linguistic antipatterns (or patterns) in RESTful APIs.
+
+
+\item \textbf{RQ1.1:} \textbf{Is there a relation between design and linguistic antipatterns in RESTful APIs?}
+
+For RQ1.1, our aim is to investigate if occurrence of design antipatterns increase the likelihood of occurrence of linguistic antipatterns in REST APIs.
+
+\item \textbf{RQ1.2:} \textbf{Is there a relation between design patterns and linguistic antipatterns in RESTful APIs?}
+
+For RQ1.2, our aim is to investigate if occurrence of design patterns increase the likelihood of occurrence of linguistic patterns in REST APIs. 
+
+\item  \textbf{RQ1.3:} \textbf{Is there a relation between design antipatterns and linguistic patterns in RESTful APIs?}
+
+For RQ1.3, our aim is to investigate if occurrence of design antipatterns increase the likelihood of occurrence of linguistic patterns in REST APIs.
+
+\item  \textbf{RQ1.4:} \textbf{Is there a relation between design- and linguistic patterns in RESTful APIs?}
+
+For RQ1.4, our aim is to investigate if occurrence of design patterns increase the likelihood of occurrence of linguistic antipatterns in REST APIs. 
+
+\end{itemize}
+
+\subsection{Target group}
+This study is aimed to support the developers of REST APIs so they can develop APIs of high quality that are easy to use and understand. 
+
+\subsection{Outline}
+
+\begin{itemize}
+\item \textbf{Chapter 2} describes our method for detecting antipatterns and patterns and what rules used for detection.
+\item \textbf{Chapter 3} describes how we implemented the rules in our detection program and how the statistics for the relationships are calculated.
+\item \textbf{Chapter 4} presents the results, i.e., the statistical relation between linguistic and design quality with an overall Chi-square p-value and Phi coefficients from pairwise comparisons.
+\item \textbf{Chapter 5} analyses the result and explain the factors behind the results.
+\item \textbf{Chapter 6} provides the discussion of the results, our method used, implementation and previous work done in the same area.
+\item \textbf{Chapter 7} summarizes the result of the research done and draw conclusions based on it. Outline future work and validity of result.
+\end{itemize}
+
+\clearpage
+\newpage
