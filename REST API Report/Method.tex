@@ -13,63 +13,28 @@ To answer RQ1 we have performed a Chi-Square test on the design quality data \te
  \label{fig:Methodfigure}
 \end{figure}
 
-
+\clearpage
 
 \subsection{APIs Used for the Study}
 
 We selected ten REST APIs for this study. In Table \ref{tab:APIsusedintheresearch}, each API is listed with their current version in use and link to documentation.
 
-\begin{center}
-\begin{table}[!ht]
-\small
-\begin{tabular}{|p{25mm}|p{12mm}|p{100mm}|}
-\hline \textbf{APIs} & \textbf{Version} & \textbf{Documentation} \\
-\hline 
-Facebook &
-7.0 & 
-\url{https://developers.facebook.com/docs/apis-and-sdks/} 
-\\ \hline
-Nasa &
-- &
-\url{https://ssd-api.jpl.nasa.gov/doc/index.php}
-\\ \hline
-Imgur &
-3 & 
-\url{https://apidocs.imgur.com/?version=latest}
-\\ \hline
-Disqus &
-3 & 
-\url{https://disqus.com/api/docs/}
-\\ \hline
-GitHub &
-- & 
-\url{https://developer.github.com/v3/}
-\\ \hline
-Twitter &
-1.1 & 
-\url{https://developer.twitter.com/en}
-\\ \hline
-Bitly &
-3 & 
-\url{https://dev.bitly.com/}
-\\ \hline
-StackExchange &
-2.2 & 
-\url{https://api.stackexchange.com/}
-\\ \hline
-Vimeo &
-3 & 
-\url{https://developer.vimeo.com/}
-\\ \hline
-Spotify &
-1 & 
-\url{https://developer.spotify.com/documentation/}
-\\ \hline
-\end{tabular}
- \caption{The list of REST APIs used in the study.}
- \label{tab:APIsusedintheresearch}
-\end{table}
-\end{center}
+\textcolor{red}{
+We selected ten REST APIs for this study. We mosly based our selection of these on the APIs used in previous research by Palma et al. \cite{linguistic}. For some APIs used by Palma et al., we selected other similar APIs as alternatives. The APIs we selected are listed below with links to their documentations in footnotes and with our motivations for selecting them. 
+}
+
+\begin{itemize}
+    \item \textbf{Bitly\footnote{\url{https://dev.bitly.com/}} - version 3:} used by Palma et al. \cite{linguistic}.
+    \item \textbf{Disqus\footnote{\url{https://disqus.com/api/docs/}} - version 3:} Selected because Disqus  is  a  widely used service.
+    \item \textbf{Facebook\footnote{\url{https://developers.facebook.com/docs/apis-and-sdks/}} - version 7.0:} used by Palma et al. \cite{linguistic}.
+    \item \textbf{GitHub\footnote{\url{https://developer.github.com/v3/}} - version 3:} one API used by Palma et al. was Ohloh \cite{linguistic}. The Ohloh website does not exist as Ohloh anymore \cite{ohloh}, since Ohloh provided services to support open source software \cite{ohloh} we decided to use GitHub as an alternative since GitHub also provides services for open source software and is, at the time of writing, very well known and widely used. 
+    \item \textbf{Imgur\footnote{\url{https://apidocs.imgur.com/?version=latest}} - version 3:} one API used by Palma et al. was Instagram \cite{linguistic}, since Instagram has been acquired by Facebook and we are using Facebook, we decided to pick an alternative to Instagram to make our list of APIs studied more diversified. As an alternative to Instagram, we selected Imgur, which is also a widely used image sharing service.
+    \item \textbf{Nasa\footnote{\url{https://ssd-api.jpl.nasa.gov/doc/index.php}}:} Selected because Nasa is a widely known organization
+    \item \textbf{Spotify\footnote{\url{https://developer.spotify.com/documentation/}} - version 1:} one API used by Palma et al. was MusicGraph \cite{linguistic}. MusicGraph is no longer available on RapidAPI \cite{musicrapid}. As a replacement for MusicGraph, we selected Spotify, which is a widely used and well known music service. 
+    \item \textbf{StackExchange\footnote{\url{https://api.stackexchange.com/}} - version 2.2:} used by Palma et al. \cite{linguistic}.
+    \item \textbf{Twitter\footnote{\url{https://developer.twitter.com/en}} - version 1.1:} used by Palma et al. \cite{linguistic}.
+    \item \textbf{Vimeo\footnote{\url{https://developer.vimeo.com/}} - version 3:} one API used by Palma et al. \cite{linguistic} was YouTube, since we are excluding Google APIs, we selected Vimeo as an alternative, Vimeo is also a widely used video sharing platform. 
+\end{itemize}
 
 \subsection{REST Design Antipatterns}
 
@@ -107,7 +72,7 @@ When the request or response contains any kind of cookie header \cite{design}. F
 
 \\ \hline
 \end{tabular}
- \caption{Rules for detecting REST design antipatterns based on SOFA.}
+ \caption{Rules for detecting REST design antipatterns.}
  \label{tab:RulesfordetectingRESTdesignantipatterns}
  \end{center}
 \end{table}
@@ -136,7 +101,7 @@ When a response to a GET request contains an ETag or when the request or respons
 
 \\ \hline
 \end{tabular}
- \caption{Rules for REST design patterns based on SOFA.}
+ \caption{Rules for REST design patterns.}
  \label{tab:RulesforRESTdesignpatterns}
 \end{table}
 \end{center}
@@ -166,7 +131,7 @@ When the HTTP method is PUT or DELETE and the last node is a plural word. Or whe
 
 \\ \hline
 \end{tabular}
- \caption{Rules for linguistic antipatterns based on SOFA.}
+ \caption{Rules for linguistic antipatterns.}
  \label{tab:Rulesforlinguisticantipatterns}
 \end{table}
 \end{center}
@@ -197,7 +162,7 @@ Singularised Nodes
 &
 When the HTTP method is PUT or DELETE and the last node is a singular word. Or when the HTTP method is POST and the last node is not a singular word \cite{linguistic}. This is the corresponding pattern of the Pluralised Nodes antipattern. \newline Pattern examples: PUT example.com/animals/squirrel and POST example.com/animals/squirrels\\ \hline
 \end{tabular}
- \caption{Rules for linguistic patterns based on SOFA.}
+ \caption{Rules for linguistic patterns.}
  \label{tab:Rulesforlinguisticpatterns}
 \end{table}
 \end{center}

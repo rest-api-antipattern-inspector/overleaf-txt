@@ -70,11 +70,23 @@ The linguistic program has been further developed to get a more accurate result 
 \vspace{2mm}
 With our improvement, the program can detect words written together and treat them as separate nodes. If a word is not found in the dictionary then this code block is executed to check if the word might consist of more than one word. The two new words must make use of all the characters of the old word.
 
+\begin{algorithm}
+\caption{Find words written together}
+\begin{algorithmic}
+\STATE {$wordOccurance = wordNetFindOccurrances(node)$}
+\IF{$wordOccurance = 0$}
+    \STATE Split node in two words $word1, word2$, $word1$ being the first letter of $node$ and $word2$ the rest of the letters.
+    \WHILE{$wordNetFindOccurrances(word1) = 0  wordNetFindOccurrances(word2) = 0$}
+        \STATE Then taking one letter from $word2$ and adding it to $word1$
+    \ENDWHILE  
+\ENDIF
+\end{algorithmic}
+\end{algorithm}
+
 \subsection{Detection of REST Design Antipatterns}
 
 To be able to detect REST design antipatterns in APIs, we have developed a program for automatically making API calls, analyzing the metadata and storing the results. 
-The program for detecting REST design antipatterns is written in TypeScript using the Node.js platform. These techniques were chosen partly because JavaScript is the most used language on GitHub \cite{octogithub} and because TypeScript, which extends JavaScript \cite{typescript}, is among the fastest growing languages on GitHub \cite{octogithub}. The aim is that this choice of techniques will help make our source code understandable for a wide audience. It is desirable for the sake of increased reliability for other developers and researchers to be able to understand our source code and thereby be able to validate it. Working with techniques that are currently commonly used will also result in access to many modern third party software libraries which will simplify and speed up the development process as well as reduce the risk of flaws since software libraries that are commonly used, have been battle-tested and have gotten good reviews can be selected. In addition, Node.js was selected for its suitability for handling HTTP calls \cite{nodejs} and TypeScript was selected to help with the detection of flaws \cite{typescript} in the development of the source code. 
-The program has a Command Line Interface (CLI), the user selects which APIs to run detection for and the results with meta data gets stored in a JSON file \footnote{\url{https://github.com/rest-api-antipattern-inspector/rest-api-antipattern-inspector}}. 
+The program for detecting REST design antipatterns is written in TypeScript using the Node.js platform. The program has a Command Line Interface (CLI), the user selects which APIs to run detection for and the results with meta data gets stored in a JSON file \footnote{\url{https://github.com/rest-api-antipattern-inspector/rest-api-antipattern-inspector}}. 
 
 \subsection{Design Antipattern Detection Functions}
 
