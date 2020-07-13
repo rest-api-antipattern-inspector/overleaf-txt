@@ -9,13 +9,72 @@ There are multiple aspects of REST design, and previous research by Palma et al.
 
 REST linguistic quality is for HTTP resources about URIs. It is important that URIs are designed in a good and clear way that is easy to read and understand according to standard best practice recommendations of REST. This is to enable and simplify communications \cite{restdissertation}\cite{linguistic}. 
 
-
 One aspect of linguistic quality is linguistic antipatterns. Arnaoudova et al. described linguistic antipatterns as the deviation from the best practices for designing URIs \cite{arnaoudova}. Another aspect of linguistic quality is linguistic patterns which is described by Palma et al. as the opposite of antipatterns, i.e., when best practice has been adhered and the URIs are correctly designed. A lack of linguistic antipatterns and a presence of linguistic patterns results in a good linguistic quality. Both linguistic patterns and antipatterns are therefore aspects of linguistic quality \cite{linguistic}.
 
-There are multiple linguistic patterns and antipatterns \cite{linguistic}. In this study, we will not focus on all of them, we will focus on five linguistic patterns and five linguistic antipatterns. These will be described detail with rules for approaches for detecting them in Tables \ref{tab:Rulesforlinguisticantipatterns} and \ref{tab:Rulesforlinguisticpatterns}. %The reason we selected these was partially because these have central roles and are important but also because we assessed that it would be feasible within the scope of this study for us to  develop processes to identify and detect these.
+There are multiple linguistic patterns and antipatterns \cite{linguistic}. In this study, we will not focus on all of them, we will focus on five linguistic patterns and five linguistic antipatterns. These will be described detail with rules for approaches for detecting them in Tables \ref{tab:Rulesforlinguisticantipatterns} and \ref{tab:Rulesforlinguisticpatterns}. The reason we selected these was partially because these have central roles and are important but also because we assessed that it would be feasible within the scope of this study for us to  develop processes to identify and detect these.
 
-The aspects of linguistic quality we will focus on are mainly that nodes in URIs should be within the same context, nodes should not contain symbols that obstruct readability, and nodes should be hierarchically ordered. Besides, nodes should use singular or plural words in a consistent way based on the HTTP method used and the nodes should not contain words that describe the action performed by the request instead that should depend on which HTTP method has been used \cite{linguistic}. 
+\subsection{Linguistic Antipatterns}
+\label{linguisticAntipatterns}
 
+Based on the research about REST linguistic quality conducted by Palma et al. \cite{linguistic}, five linguistic antipatterns are defined in the study. In Table \ref{tab:Rulesforlinguisticantipatterns}, they are listed with rule for detection.
+\begin{center}
+\begin{table}[!ht]
+\small
+\begin{tabular}{|p{30mm}|p{105mm}|}
+\hline \textbf{Name} & \textbf{Rules} \\
+\hline 
+Contextless Resource Names &
+When the words in the URI nodes are not within the same context \cite{linguistic}. \newline Antipattern example: example.com/mammals/pigeons\\ \hline
+Non-hierarchical Nodes &
+When the URI nodes are not in a hierarchical order \cite{linguistic}. \newline Antipattern example: example.com/squirrels/mammals\\ \hline
+Amorphous URIs &
+When the URI nodes contain symbols that hinder readability like underscores, upper case letters for anything other than the first letter, trailing slashes or file extensions \cite{linguistic}. \newline Antipattern example: 
+example.com/small\_mammals/Squirrel5\\ \hline
+CRUDy URIs &
+When the URI contains words that indicate the action its request performs. Instead, the action performed should be determined by which HTTP method is used \cite{linguistic}. \newline Antipattern example: 
+example.com/update-animal/mammals/squirrels?id=5\\ \hline
+Pluralised Nodes
+&
+When the HTTP method is PUT or DELETE and the last node is a plural word. Or when the HTTP method is POST and the last node is not a plural word \cite{linguistic}. \newline Antipattern examples: PUT example.com/animals/squirrels and POST example.com/animals/squirrel
+
+\\ \hline
+\end{tabular}
+ \caption{Rules for linguistic antipatterns.}
+ \label{tab:Rulesforlinguisticantipatterns}
+\end{table}
+\end{center}
+
+\clearpage
+
+\subsection{Linguistic Patterns}
+\label{linguisticPatterns}
+
+Linguistic patterns will be treated as linguistic antipatterns in reverse. In other words, if an antipattern is not detected it will be considered as the corresponding  pattern. Table \ref{tab:Rulesforlinguisticpatterns} describe each pattern and rule for its detection, based on the research on REST linguistic quality conducted by Palma et al. \cite{linguistic}.
+
+\begin{center}
+\begin{table}[!ht]
+\small
+\begin{tabular}{|p{30mm}|p{105mm}|}
+\hline \textbf{Name} & \textbf{Rules} \\
+\hline 
+Contextualised Resource Names &
+When the words in the URI nodes are within the same context \cite{linguistic}. This is the corresponding pattern of Contextless Resource Names. \newline Pattern example: 
+example.com/mammals/squirrels\\ \hline
+Hierarchical Nodes &
+When the URI nodes are in a proper and logical hierarchical order \cite{linguistic}. This is the corresponding pattern of Non-hierarchical Nodes. \newline Pattern example: /house/room/door\\ \hline
+Tidy URIs &
+When the URI nodes do not contain symbols that hinder readability \cite{linguistic}. This is the corresponding pattern of Amorphous URIs.\\ \hline
+Verbless URIs &
+When the URI does not contain words that indicate the action its request performs. And when instead, the action performed is determined by which HTTP method is used \cite{linguistic}. This is the corresponding pattern of CRUDy URIs. \newline Pattern example: 
+PUT example.com/mammals/squirrel\\ \hline
+Singularised Nodes
+&
+When the HTTP method is PUT or DELETE and the last node is a singular word. Or when the HTTP method is POST and the last node is not a singular word \cite{linguistic}. This is the corresponding pattern of the Pluralised Nodes antipattern. \newline Pattern examples: PUT example.com/animals/squirrel and POST example.com/animals/squirrels\\ \hline
+\end{tabular}
+ \caption{Rules for linguistic patterns.}
+ \label{tab:Rulesforlinguisticpatterns}
+\end{table}
+\end{center}
 
 \subsection{REST Design Quality}
 
@@ -23,18 +82,77 @@ Another aspect of REST as described by Palma et al. is about the design quality.
 
 Likewise in linguistic quality, there are multiple aspects of design quality \cite{design}, and we will not focus on all of them in this study. We will focus on six design antipatterns and three design patterns. These have been selected because of their importance but also because of practical reasons because we assessed that it would be feasible to be able to develop processes to identify and detect those within the scope of this study. In this study, these design antipatterns and patterns we have chosen to focus on will be described in Tables \ref{tab:RulesfordetectingRESTdesignantipatterns} and \ref{tab:RulesforRESTdesignpatterns}. 
 
-Some aspects of design quality that we will focus on that are about enabling effective communications are the following:
+\subsection{REST Design Antipatterns}
+\label{desidnAntipatterns}
 
-\begin{itemize}
-    \item Requests and responses should only use standard headers \cite{design}. 
-    \item Response bodies of GET requests should contain links to relevant resources and response bodies of POST request should contain that or a Location header \cite{design}.
-    \item Responses should contain a correct status code and status text that are of a valid combination based on the HTTP method used \cite{design}.
-    \item Servers should preferably be able to offer responses in multiple different standardized file types with the aid of MIME Type specifications. Requests should specify Accepted MIME Types and the server should preferably be able to offer a requested MIME Type. The MIME Types should also be standardized ones \cite{design}.
-    \item Caching should be enabled \cite{restdissertation}\cite{design}.
-    \item REST communications should be stateless and no types of cookie headers should therefore be used \cite{restdissertation}\cite{design}.
-\end{itemize}
+Based on the research about REST design quality conducted by Palma et al. \cite{design}, we identify six REST design antipatterns and rules for their detection in this study. Table \ref{tab:RulesfordetectingRESTdesignantipatterns} list each antipattern with their rule for detection.
+
+\begin{table}[!ht]
+\begin{center}
+\small
+\begin{tabular}{|p{5cm}|p{9cm}|}
+\hline \textbf{Name} & \textbf{Rules} \\
+\hline 
+Breaking Self-descriptiveness &
+When a request or response contains non-standard headers \cite{design}. Algorithm \ref{Breaking Self-descriptiveness algorithm} shows our implementation of this detection.
+
+
+\\ \hline
+Forgetting Hypermedia &
+When the response body of a GET request does not contain links to relevant resources or when the response of a POST request does not contain that or a Location header \cite{design}. Algorithm \ref{Forgetting Hypermedia algorithm} shows our implementation of this detection.
+
+\\ \hline
+Ignoring Caching &
+When a response of a GET request does not contain an ETag or the request or response headers do not contain a Cache-Control header or that is set to no-cache or no-store \cite{design}. Algorithm \ref{Ignoring Caching algorithm} shows our implementation of this detection.
+
+\\ \hline
+Ignoring MIME Types &
+When a response's Content-Type header's value is not a standard MIME type or if it is not among the accepted MIME types requested \cite{design}. Algorithm \ref{Ignoring MIME Types algorithm} shows our implementation of this detection.
+
+\\ \hline
+Ignoring Status Code &
+When the combination of HTTP method, status code, and status text is not a valid combination \cite{design}. Algorithm \ref{Ignoring Status Code algorithm} shows our implementation of this detection.
+
+\\ \hline
+Misusing Cookies &
+When the request or response contains any kind of cookie header \cite{design}. Algorithm \ref{Misusing Cookies algorithm} shows our implementation of this detection.
+
+\\ \hline
+\end{tabular}
+ \caption{Rules for detecting REST design antipatterns.}
+ \label{tab:RulesfordetectingRESTdesignantipatterns}
+ \end{center}
+\end{table}
 
 Another aspect of design quality that has been studied in previous research by Palma et al. is that one in HTTP communications should utilize the different variations of HTTP methods that are available and to not only use GET and/or POST \cite{design}. This is related to linguistic quality, the action performed by the request should not depend on the URI, it should instead depend on the HTTP method \cite{linguistic}\cite{design}. But because of a lack of time, resources and because of other practical reasons, we have chosen to not focus on the detection of this particular aspect of design quality in this study. 
+
+\subsection{REST Design Patterns}
+\label{designPatterns}
+Based on the research about REST Design Quality conducted by Palma et al. \cite{design}, three design patterns are identified and used in the study. In Table \ref{tab:RulesforRESTdesignpatterns} they are listed together with rule for detection.
+
+\begin{center}
+\begin{table}[!ht]
+\small
+\begin{tabular}{|p{5cm}|p{9cm}|}
+\hline \textbf{Name} & \textbf{Rules} \\
+\hline 
+Content Negotiation &
+When the value of a response’s Content-Type header is a standard MIME type and among the accepted MIME types requested \cite{design}. This is the corresponding pattern to the Ignoring MIME types antipattern.
+
+\\ \hline
+Entity Linking &
+When the response body of a GET request contains links to relevant resources or when the response of a POST request contains that or a Location header \cite{design}. This is the corresponding pattern to the Forgetting Hypermedia antipattern. 
+
+\\ \hline
+Response Caching &
+When a response to a GET request contains an ETag or when the request or response headers contain a Cache-Control header which is not set to no-cache or no-store \cite{design}. This is the corresponding pattern to the  Ignoring Caching antipattern. 
+
+\\ \hline
+\end{tabular}
+ \caption{Rules for REST design patterns.}
+ \label{tab:RulesforRESTdesignpatterns}
+\end{table}
+\end{center}
 
 
 \subsection{Relation between Linguistic and Design Quality}
@@ -76,6 +194,8 @@ No studies were found that are about this specific topic, i.e., if there is a re
 \subsection{Problem formulation}
 The aim of this study is to investigate if there is relation between  linguistic quality and design quality in widely used REST APIs. Antipatterns which decrease the quality has been detected in earlier research by Palma et al. \cite{linguistic}\cite{design} but finding a relationship between design and linguistic quality has not been done in earlier research. We will use the same rules for detection as described by Palma et al. \cite{linguistic} \cite{design}.
 
+\textcolor{red}{What we mean with quality here is the absence of antipatterns and the presence of recommended patterns. Our aim is to investigate if there is a statistical relation/association between good or bad design quality and good or bad linguistic quality, and vice versa. }
+
 \subsection{Motivation}
 Currently, there are numerous APIs available ranging from all kinds of categories imaginable. With this huge diversity, there is a need for standardization to make the developers recognize how to use each API. APIs that are not following the standard might be difficult to understand and developers might choose other APIs that do follow the standard.
 
@@ -103,7 +223,7 @@ This research is meant raise the awareness of antipatterns in APIs, and encourag
 The APIs used in this study are partly from the APIs set used by Palma et al. \cite{linguistic} (see subsection \ref{selectedAPIs}). Google APIs will be excluded since another study similar to this is being conducted but exclusively about Google APIs. How endpoints will be selected is discussed in Section \ref{Reliability and Validity} about reliability and validity in the Method.
 
 
-\subsection{Research Questions}
+\subsection{Research Questions} \label{research_questions}
 The research questions below will be answered in order to achieve our objectives. These research questions are similar to the ones used by another student group who is conducting a study similar to ours, but their study is exclusively on Google APIs. 
 
 \begin{itemize}

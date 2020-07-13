@@ -1,46 +1,5 @@
 \section{Implementation}
 
-\subsection{Implementation Details}
-
-Figures \ref{fig:Detectionofdesignantipatterns}, \ref{fig:Detectionoflinguisticquality}, \ref{fig:Puttingtogetherthefindings}, \ref{fig:Rchisquarecalculation}, and \ref{fig:Calculationofphicoefficients} illustrates programs created and used for our research.
-
-\begin{figure}[h!]
- \centering
- \includegraphics[scale=0.5]{img/method_figures/rest-api-antipattern-inspector.png}
- \caption{Detection of design antipatterns.}
- \label{fig:Detectionofdesignantipatterns}
-\end{figure}
-
-\begin{figure}[h!]
- \centering
- \includegraphics[scale=0.55]{img/method_figures/JAVA_SARA.png}
- \caption{Detection of linguistic quality.}
- \label{fig:Detectionoflinguisticquality}
-\end{figure}
-
-\begin{figure}[h!]
- \centering
- \includegraphics[scale=0.45]{img/method_figures/data_handler.png}
- \caption{Putting together the findings.}
- \label{fig:Puttingtogetherthefindings}
-\end{figure}
-
-\begin{figure}[h!]
- \centering
- \includegraphics[scale=0.5]{img/method_figures/R_Chi_square.png}
- \caption{Chi square calculation.}
- \label{fig:Rchisquarecalculation}
-\end{figure}
-
-\begin{figure}[h!]
- \centering
- \includegraphics[scale=0.5]{img/method_figures/table_phico.png}
- \caption{Calculation of Phi coefficients.}
- \label{fig:Calculationofphicoefficients}
-\end{figure}
-
-\clearpage
-
 \subsection{Detection of Linguistic Antipatterns}
 
 SARA (Semantic Analysis of RESTful APIs) is a Java program used for the detection of Linguistic Quality in URIs of REST APIs introduced by Palma et al. \cite{linguistic}. 
@@ -68,20 +27,44 @@ The linguistic program has been further developed to get a more accurate result 
 \texttt{/v3/{agreementId}/consumption/districtheat/data}
 
 \vspace{2mm}
-With our improvement, the program can detect words written together and treat them as separate nodes. If a word is not found in the dictionary then this code block is executed to check if the word might consist of more than one word. The two new words must make use of all the characters of the old word.
+With our improvement, the program can detect words written together and treat them as separate nodes. If a word is not found in the dictionary then this code block is executed to check if the word might consist of more than one word. The two new words must make use of all the characters of the old word. \textcolor{red}{See algorithm \ref{Find words written together algorithm} for the algorithm used for this improvement.}
 
 \begin{algorithm}
 \caption{Find words written together}
 \begin{algorithmic}
-\STATE {$wordOccurance = wordNetFindOccurrances(node)$}
-\IF{$wordOccurance = 0$}
-    \STATE Split node in two words $word1, word2$, $word1$ being the first letter of $node$ and $word2$ the rest of the letters.
-    \WHILE{$wordNetFindOccurrances(word1) = 0  wordNetFindOccurrances(word2) = 0$}
-        \STATE Then taking one letter from $word2$ and adding it to $word1$
-    \ENDWHILE  
-\ENDIF
+\State $word := Node.trim()$
+\State $wordSingular := $""$ $
+\If{$word.charAt(word.length() - 1) = $'s'$ $} 
+    \State $wordSingular := word.substring(0, word.length() - 1)$
+\EndIf
+\If{$disco.frequency(word) > 0 \Or disco.frequency(wordSingular) > 0$}
+    \State $uriNodes.add(word)$
+\Else
+\For{$i \In range(0, word.length())$}
+    \If{$i = word.length() - 1$}
+        \State $uriNodes.add(word)$
+        \State \textbf{break}
+    \EndIf
+    
+    \State $subWord1 := word.substring(0, i + 1)$
+    \State $subWord2 := word.substring((i + 1), word.length())$
+    
+    \If{disco.frequency(subWord1.trim()) = 0}
+        \State \textbf{continue}
+    \EndIf
+    
+    \If{disco.frequency(subWord2.trim()) > 0}
+        \State $uriNodes.add(subWord1)$
+        \State $uriNodes.add(subWord2)$
+        \State \textbf{break}
+    \EndIf
+\EndFor
+\EndIf
 \end{algorithmic}
+\label{Find words written together algorithm}
 \end{algorithm}
+
+\clearpage
 
 \subsection{Detection of REST Design Antipatterns}
 
@@ -90,94 +73,151 @@ The program for detecting REST design antipatterns is written in TypeScript usin
 
 \subsection{Design Antipattern Detection Functions}
 
-Figures \ref{fig:BreakingSelf-descriptiveness}, \ref{fig:ForgettingHypermedia}, \ref{fig:IgnoringCaching}, \ref{fig:IgnoringMIMETypes}, \ref{fig:IgnoringStatusCode}, and \ref{fig:MisusingCookies} show the source code for functions we have created to detect REST design antipatterns. Many of these functions use helper functions we have created in other parts of the source code, it returns the boolean value true if the antipattern is detected and false otherwise.
+Algorithms \ref{Breaking Self-descriptiveness algorithm}, \ref{Forgetting Hypermedia algorithm}, \ref{Ignoring Caching algorithm}, \ref{Ignoring MIME Types algorithm}, \ref{Ignoring Status Code algorithm}, and \ref{Misusing Cookies algorithm} show the algorithms for the functions we have created to detect REST design antipatterns. Many of these functions use helper functions we have created in other parts of the source code, it returns the boolean value true if the antipattern is detected and false otherwise.
 
-As shown in Figure \ref{fig:BreakingSelf-descriptiveness}, the Breaking Self-descriptiveness antipattern gets detected if there are any non-standard headers in the request or response headers after an API call.
+As shown in algorithm \ref{Breaking Self-descriptiveness algorithm}, the Breaking Self-descriptiveness antipattern gets detected if there are any non-standard headers in the request or response headers after an API call.
 
-\begin{figure}[h!]
- \centering
- \includegraphics[width=0.8\textwidth]{img/breakingSelfDescriptiveness.png}
- \caption{The detection of Breaking Self-descriptiveness.}
- \label{fig:BreakingSelf-descriptiveness}
-\end{figure}
+\begin{algorithm}
+\caption{The detection of Breaking Self-descriptiveness.}
+\begin{algorithmic}
+\Function{$BSD$}{$requestHeaders, responseHeaders, nonStandardHeaders$}
+\State $requestHeaderKeys := getKeys(requestHeaders)$
+\State $responseHeaderKeys := getKeys(responseHeaders)$
 
-As shown in Figure \ref{fig:ForgettingHypermedia}, the Forgetting Hypermedia antipattern gets detected if the response body to a GET request does not contain any link keys (link/links/href) or if a POST request does not contain that or a Location header.
+\For{$headerKey \In requestHeaderKeys$}
+    \If{$!getStandardRequestHeaders().includes(headerKey)$}
+        \State $nonStandardHeaders.add(headerKey)$
+    \EndIf
+\EndFor
 
-\begin{figure}[h!]
- \centering
- \includegraphics[width=0.8\textwidth]{img/forgettingHyperMedia.png}
- \caption{The detection of Forgetting Hypermedia antipattern.}
- \label{fig:ForgettingHypermedia}
-\end{figure}
+\For{$headerKey \In responseHeaderKeys$}
+    \If{$!getStandardResponseHeaders().includes(headerKey)$}
+        \State $nonStandardHeaders.add(headerKey)$
+    \EndIf
+\EndFor
+\State \Return $!nonStandardHeaders.length \neq 0$
+\EndFunction
+\end{algorithmic}
+\label{Breaking Self-descriptiveness algorithm}
+\end{algorithm}
 
-As shown in Figure \ref{fig:IgnoringCaching}, the Ignoring Caching antipattern gets detected for responses to GET requests if the response headers do not contain an ETag or if the request or response headers does not contain a Cache-Control header or if that is set to `no-cache' or `no-store'.
+As shown in algorithm \ref{Forgetting Hypermedia algorithm}, the Forgetting Hypermedia antipattern gets detected if the response body to a GET request does not contain any link keys (link/links/href) or if a POST request does not contain that or a Location header.
 
-\begin{figure}[h!]
- \centering
- \includegraphics[width=0.8\textwidth]{img/ignoringCaching.png}
- \caption{The detection of Ignoring Caching antipattern.}
- \label{fig:IgnoringCaching}
-\end{figure}
+\begin{algorithm}
+\caption{The detection of Forgetting Hypermedia.}
+\begin{algorithmic}
+\Function{$FH$}{$body, httpMethod, responseHeaders$}
+\State $bodyKeys := getAllKeys(body)$
+\State \Return $( \newline 
+\hspace*{3em} (httpMethod = $"GET"$ \And !containsLinks(bodyKeys)) \Or \newline 
+\hspace*{3em} (httpMethod = $"POST"$ \And \newline 
+\hspace*{4em} !containsHeader(responseHeaders, $"Location"$) \And \newline 
+\hspace*{4em} !containsLinks(bodyKeys)) \newline 
+\hspace*{2em})$
+\EndFunction
+\end{algorithmic}
+\label{Forgetting Hypermedia algorithm}
+\end{algorithm}
 
-As shown in Figure \ref{fig:IgnoringMIMETypes}, the Ignoring MIME Types gets detected if the response Content-Type header's value is not a standard mime type or if it is not among the accepted mime types requested.
+As shown in algorithm \ref{Ignoring Caching algorithm}, the Ignoring Caching antipattern gets detected for responses to GET requests if the response headers do not contain an ETag or if the request or response headers does not contain a Cache-Control header or if that is set to `no-cache' or `no-store'.
 
-\begin{figure}[h!]
- \centering
- \includegraphics[width=0.8\textwidth]{img/ignoringMimeType.png}
- \caption{The detection of Ignoring MIME Types antipattern.}
- \label{fig:IgnoringMIMETypes}
-\end{figure}
+\begin{algorithm}
+\caption{The detection of Ignoring Caching.}
+\begin{algorithmic}
+\Function{$IC$}{$httpMethod, requestHeaders, responseHeaders$}
+\If{$httpMethod \neq $"GET"$ $}
+\State \Return $false$
+\EndIf
+\State $clientCaching := getHeaderValue(requestHeaders, $"Cache-Control"$)$
+\State $serverCaching := getHeaderValue(responseHeaders, $"Cache-Control"$)$
+\State \Return $( \newline
+\hspace*{3em} (!containsHeader(responseHeaders, $"Cache-Control"$) \Or \newline
+\hspace*{4em} isNoCacheOrNoStore(clientCaching) \Or \newline
+\hspace*{4em} isNoCacheOrNoStore(serverCaching)) \And \newline
+\hspace*{3em} !containsHeader(responseHeaders, $"Etag"$) \newline
+\hspace*{2em})$
+\EndFunction
+\end{algorithmic}
+\label{Ignoring Caching algorithm}
+\end{algorithm}
 
-As shown in Figure \ref{fig:IgnoringStatusCode}, if the HTTP method used is GET, POST, PUT or DELETE, antipattern Ignoring Status Code gets detected if the combination of HTTP method, status code and status text in the response is not part of a list of valid combinations in an XML file used in the implementation by Palma et al.  \cite{linguistic}.
+As shown in algorithm \ref{Ignoring MIME Types algorithm}, the Ignoring MIME Types gets detected if the response Content-Type header's value is not a standard mime type or if it is not among the accepted mime types requested.
 
-\begin{figure}[h!]
- \centering
- \includegraphics[width=0.8\textwidth]{img/ignoringStatusCode.png}
- \caption{The detection of Ignoring Status Code antipattern.}
- \label{fig:IgnoringStatusCode}
-\end{figure}
+\begin{algorithm}
+\caption{The detection of Ignoring MIME Types.}
+\begin{algorithmic}
+\Function{$IMT$}{$requestHeaders, responseHeaders$}
+\State $acceptedMIMETypes := getHeaderValues(requestHeaders, $"Accept"$)$
+\State $contentType := getHeaderValue(responseHeaders, $"Content-Type"$)$
+\State \Return $( \newline
+\hspace*{3em} !contentType \Or \newline
+\hspace*{3em} !isStandardMIMEType(contentType) \Or \newline
+\hspace*{3em} !isAcceptedMIMEType(contentType, acceptedMIMETypes) \newline
+\hspace*{2em})$
+\EndFunction
+\end{algorithmic}
+\label{Ignoring MIME Types algorithm}
+\end{algorithm}
 
-As shown in Figure \ref{fig:MisusingCookies}, the Misusing Cookies antipattern gets detected if the request or response headers contain any type of cookie header.
+As shown in algorithm \ref{Ignoring Status Code algorithm}, if the HTTP method used is GET, POST, PUT or DELETE, antipattern Ignoring Status Code gets detected if the combination of HTTP method, status code and status text in the response is not part of a list of standard combinations in an XML file used in the implementation by Palma et al.  \cite{linguistic}.
 
-\begin{figure}[h!]
- \centering
- \includegraphics[width=0.9\textwidth]{img/misusingCookies.png}
-    \caption{The detection of Misusing Cookies antipattern.}
-    \label{fig:MisusingCookies}
-\end{figure}
+\begin{algorithm}
+\caption{The detection of Ignoring Status Code.}
+\begin{algorithmic}
+\Function{$ISC$}{$\newline
+\hspace*{1.4em} httpMethod, \newline
+\hspace*{1.4em} statusCode, \newline
+\hspace*{1.4em} statusText, \newline
+\hspace*{1.4em} standardStatusCombos \newline
+$}
+\If{$httpMethod \neq (\newline
+    \hspace*{3em} $"GET"$ \Or \newline
+    \hspace*{3em} $"POST"$ \Or \newline
+    \hspace*{3em} $"PUT"$ \Or \newline
+    \hspace*{3em} $"DELETE"$ \newline
+\hspace*{2em})$}
+\State \Return $false$
+\EndIf
+\State \Return $(\newline
+\hspace*{3em} standardStatusCombos.filter(\newline
+\hspace*{4em} combo \ArrowFunction \newline
+\hspace*{5em} combo.method = httpMethod \And \newline
+\hspace*{5em} combo.code = statusCode \And \newline
+\hspace*{5em} combo.text = statusText \newline
+\hspace*{3em} ).length = 0 \newline
+\hspace*{2em})$
+\EndFunction
+\end{algorithmic}
+\label{Ignoring Status Code algorithm}
+\end{algorithm}
 
-\subsection{Detection of Design Patterns}
+As shown in algorithm \ref{Misusing Cookies algorithm}, the Misusing Cookies antipattern gets detected if the request or response headers contain any type of cookie header.
 
-After detecting antipatterns and storing meta data about them, this function in Figure \ref{fig:Detectingpatterns} is used to determine and store information about patterns in our Node.js data-handler program. The patterns are set to true, meaning they are fulfilled, if the corresponding antipatterns are set to false, meaning no such antipattern was detected\footnote{\url{https://github.com/rest-api-antipattern-inspector/data-handler}}.
-
-\begin{figure}[h!]
-\begin{center}
-\includegraphics[width=0.75\textwidth]{img/patternsFunction.png}
-    \caption{Detecting design patterns.}
-    \label{fig:Detectingpatterns}
-    \end{center}
-\end{figure}
+\begin{algorithm}
+\caption{The detection of Misusing Cookies.}
+\begin{algorithmic}
+\Function{$MC$}{$requestHeaders, responseHeaders$}
+\State \Return $(\newline
+\hspace*{3em} containsCookieHeader(requestHeaders) \Or \newline 
+\hspace*{3em} containsCookieHeader(responseHeaders) \newline
+\hspace*{2em})$
+\EndFunction
+\end{algorithmic}
+\label{Misusing Cookies algorithm}
+\end{algorithm}
 
 \clearpage
 
-\subsection{Pairwise Phi Coefficient Calculations}
+\subsection{Detection of Design Patterns}
 
-Pairwise Phi Coefficient calculations are made between all design quality aspects and all linguistic quality aspects, this results in a number indicating the strength of the relation between the aspects. This number is between -1 and 1. A Phi Coefficient above 0 indicates a positive relation and one below 0 indicates a negative relation. 0-0.19 indicates a negligible positive relation, 0.2-0.29 a weak positive, 0.3-0.39 a moderate positive and above that is a strong or very strong positive and vice versa is the case for negative numbers indicating the strength of negative relations \cite{phico}. 
+After detecting design antipatterns and storing meta data about them, a function is used to determine and store information about patterns in our Node.js data-handler program. The patterns are set to true, meaning they are fulfilled, if the corresponding antipatterns are set to false, meaning no such antipattern was detected\footnote{\url{https://github.com/rest-api-antipattern-inspector/data-handler}}.
 
-Figure \ref{fig:tableComparison} illustrates data used for a Phi Coefficient calculation between the occurrence of two aspects among API endpoints. Figure \ref{fig:phico} shows our implementation in Python for making each pairwise Phi Coefficient comparison calculation\footnote{\url{https://github.com/rest-api-antipattern-inspector/table-phico}}. Variable a is the amount of endpoints where both aspects were detected, b is the amount of endpoints where only the first aspect were detected (CRUDy URIs in the case of figure \ref{fig:tableComparison}), c is the amount of endpoints where only the second aspect were detected (Misusing Cookies in the case of figure \ref{fig:tableComparison} and d is the amount of endpoints where neither of the aspects were detected. 
+\subsection{Pairwise Phi Coefficient Calculations} \label{pairphico}
 
-\begin{figure}[!htb]
-    \centering
-    \includegraphics[width=1\textwidth]{img/CRUDy_vs_Cookies.png}
-    \caption{Contingency table for comparison of two aspects}
-    \label{fig:tableComparison}
-\end{figure}
+The scikit-learn library for Python includes a function for calculating the Phi Coefficient (or Matthews correlation coefficient, as it can also be called) \cite{scikitmcc}. We have used this for our pairwise Phi Coefficient calculations. 
 
-\begin{figure}[!htb]
-    \centering
-    \includegraphics[width=0.6\textwidth]{img/phico.png}
-    \caption{Our Phi Coefficient Calculation Implementation in Python}
-    \label{fig:phico}
-\end{figure}
+As arguments for the function, two integer arrays are used. Both arrays contain one integer for every endpoint used. One array is for a design quality aspect (antipattern/pattern), the integers' values are 1 if the quality aspect has been detected in the corresponding endpoint and 0 if it has not. In the same way there is an array structured the same way for a linguistic quality aspect. The function then returns a result as a floating point between -1 and 1, more about that in the paragraph below. In this way, all design quality aspects are compared to all linguistic quality aspects.
+
+The resulting Phi Coefficient floating point indicates the strength of the relation between the aspects. This number is between -1 and 1. A Phi Coefficient above 0 indicates a positive relation and one below 0 indicates a negative relation. 0-0.19 indicates a negligible positive relation, 0.2-0.29 a weak positive, 0.3-0.39 a moderate positive and above that is a strong or very strong positive and vice versa is the case for negative numbers indicating the strength of negative relations \cite{phico}. Osborn describes ranges from -0.3 to 0.3 as trivial \cite{Osborn}. 
 
 \newpage

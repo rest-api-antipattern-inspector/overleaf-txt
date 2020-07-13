@@ -1,20 +1,76 @@
 \section{Discussion}
 
-\subsection{Antipattern Analysis}
+\subsection{Linguistic Quality}
 
-There a lot of endpoints with Breaking Self-descriptiveness antipattern (almost all of them except four in the Nasa API). From our result, we can see a lot of APIs uses their own standard headers. A common custom header is for instance x-rate-limit that is common for a lot of the APIs and all their endpoints. It used for measuring how many request a client has made towards the API. 
+\textcolor{blue}{There are no endpoints having the Non-hierarchical Nodes antipattern. Comparing our findings of linguistic antipatterns with Palma et al. \cite{linguistic}, we see that they measured as high as 56\% of the endpoints to contain the Non-hierarchical Nodes antipattern. We used the same program for detection SARA \cite{linguistic}. There is a possibility that there might have been a change in the implementation since then which we are not aware of.}
 
-The purpose of not inventing custom headers are so that developers using the API can understand the API better. They should not be forced to learn new rules and types of headers and their use case. Since so many endpoints had this antipattern one might question whether or not the rules for detecting these are to strict. For instance, there might be a bigger fault to use a custom header if the purpose of this header is the same as a standard one. There are no standard header for determining the request limit towards an API so it might be the most natural solution to introduce a new custom header. Custom headers should always be prefixed by x-. 
+\textcolor{red}{
+And as discussed in the Result section, we also discovered flaws in the detection of the linguistic antipatterns Contextless Resource Names, Pluralised Nodes and CRUDy URIs. Which means that we discovered flaws with the detection of all linguistic antipatterns except for Amorphous URIs, and just because we did not discover any flaws in the Amorphous URIs detection, that does not mean that there is not a risk for flaws in the detection of Amorphous URIs as well.
+}
 
-There are no endpoints having the Non-hierarchical Nodes antipattern. Comparing our findings of linguistic antipatterns with Palma et al. \cite{linguistic}, we see that they measured as high as 56\% of the endpoints to contain the Non-hierarchical Nodes antipattern. We used the same program for detection SARA \cite{linguistic}. There is a possibility that there might have been a change in the implementation since then which we are not aware of. Another possibility is that there is to few nodes (words between the slashes node1/node2) in our endpoints to measure any meaningful hierarchy.
+\textcolor{red}{We do not know if the flaws in the detection of linguistic quality was caused by errors made by us in the implementation of the SARA program, if there were steps we could have taken in our implementation to make it produce more reliable results, if the flaws were present in the program in its original form or if a combination of some or all of those potential factors caused the flaws. What we can conclude is that in our study, the results of the SARA program were so flawed and proved to be, at least to some extent, unreliable. Therefore our results for linguistic quality should not be taken into consideration.}
 
-\subsection{Patterns Analysis}
+\subsection{Design Quality}
 
-There were no indications of significant relationships between each pair of design pattern \textit{vs.} linguistic pattern, or design patterns \textit{vs.} linguistic antipatterns, or linguistic pattern \textit{vs.} design antipattern. There was only a weak positive relationship between Amorphous URIs and Content Negotiation. We used three design patterns and five linguistic patterns. Since, two out of three of the design patterns - Response Caching and Entity Linking - had 100\% coverage of the endpoints tested the result will not yield any strong relations. Since, Content Negotiation was the only design pattern which did not have 100\% coverage it was the only one that could bring any meaningful relations when running the Phi coefficient tests. They also had a weak positive relation with Amorphous URIs.
+\textcolor{blue}{There a lot of endpoints with Breaking Self-descriptiveness antipattern (almost all of them except four in the Nasa API). From our result, we can see a lot of APIs uses their own standard headers. A common custom header is for instance x-rate-limit that is common for a lot of the APIs and all their endpoints. It used for measuring how many request a client has made towards the API. }
 
-Since, Hierarchical nodes are determined by Non-hierarchical Nodes antipattern reversed there might be a different result from this if we investigate the reliability of the detection method. As mentioned in previous subsection the SARA algorithm for detecting this antipattern might no longer work as expected since previous research by Palma et al. \cite{linguistic} showed a much higher detection for this antipattern.
+\textcolor{blue}{The purpose of not inventing custom headers are so that developers using the API can understand the API better. They should not be forced to learn new rules and types of headers and their use case. Since so many endpoints had this antipattern one might question whether or not the rules for detecting these are too strict. For instance, there might be a bigger fault to use a custom header if the purpose of this header is the same as a standard one. There are no standard header for determining the request limit towards an API so it might be the most natural solution to introduce a new custom header. Custom headers should always be prefixed by x-. }
 
-For Entity Linking which looks for relational resources to an endpoint yielded no antipatterns (Forgetting Hypermedia). This pattern also had a 100\% coverage. There might be reason to see if the detection of the antipattern is to loose. This is one of the harder antipatterns to detect by scripting so there might be reason to verify these results manually. Ignoring Caching was not detected as an antipattern and so the Response Caching pattern had a 100\% coverage. That all the APIs seem to conform to standard caching techniques might be less surprising since no public API want to be burdened by unnecessary requests.  
+\textcolor{blue}{For Entity Linking which looks for relational resources to an endpoint yielded no antipatterns (Forgetting Hypermedia). This pattern also had a 100\% coverage. There might be reason to see if the detection of the antipattern is to loose. This is one of the harder antipatterns to detect by scripting so there might be reason to verify these results manually. Ignoring Caching was not detected as an antipattern and so the Response Caching pattern had a 100\% coverage. That all the APIs seem to conform to standard caching techniques might be less surprising since no public API want to be burdened by unnecessary requests. }
+
+\subsection{Statistical Relation Analysis}
+\label{StatisticalRelationAnalysis}
+
+\textcolor{blue}{There is shown to be a statistical relation between misusing cookies and CRUDY URIs. However, looking at the result we might draw these conclusions too quickly. In Twitter's API all endpoints had the misusing cookies antipattern and a lot of CRUDY URIs. This API alone could had produce this result. If Twitter would not had been a part of the study this correlations might not been detected. CRUDY URIs is from our sample test correctly detected by SARA.}
+
+\textcolor{blue}{There were no indications of significant relationships between each pair of design pattern \textit{vs.} linguistic pattern, or design patterns \textit{vs.} linguistic antipatterns, or linguistic pattern \textit{vs.} design antipattern. There was only a weak positive relationship between Amorphous URIs and Content Negotiation. We used three design patterns and five linguistic patterns. Since, two out of three of the design patterns - Response Caching and Entity Linking - had 100\% coverage of the endpoints tested the result will not yield any strong relations. Since, Content Negotiation was the only design pattern which did not have 100\% coverage it was the only one that could bring any meaningful relations when running the Phi coefficient tests. They also had a weak positive relation with Amorphous URIs.}
+
+\textcolor{red}{
+And ultimately, since the results about linguistic quality from our implementation of the SARA program proved to be unreliable, as discussed earlier, no conclusions can be drawn from our results about a statistical relation between linguistic and design quality. 
+}
+
+\textcolor{red}{
+\subsection{Comparing our results about design antipatterns to the study from 2014}
+}
+
+\begin{table}[htb!]
+    \centering
+    \begin{tabular}{|c|c|c|} \hline
+    Design antipattern & Occurrence in our study & Occurrence in 2014 study  \\ \hline
+    Breaking Self-descriptiveness & 97\% & 75\%  \\ \hline
+    Forgetting Hypermedia & 0\% & 33\%  \\ \hline
+    Ignoring Caching & 0\% & 29\%   \\ \hline
+    Ignoring MIME Types & 27\% & 34\%  \\ \hline
+    Ignoring Status Code & 1\% & 2\%  \\ \hline
+    Misusing Cookies & 3\% & 31\%  \\ \hline
+    \end{tabular}
+    \caption{Our results for occurrence of design antipatterns compared to the 2014 study by Palma et al. \cite{design}}
+    \label{tab:design antipatterns compared to the 2014 study}
+\end{table}
+
+\textcolor{red}{
+Table \ref{tab:design antipatterns compared to the 2014 study} shows (in rounded percentages) occurrences of design antipatterns detected in our study compared to the study conducted by Palma et al. in 2014 \cite{design}. 
+}
+
+\textcolor{red}{
+The 2014 study showed a high occurence of Breaking Self-descriptiveness \cite{design}, non-standard headers, our showed an even higher occurrence. We followed the same rule for detection so this indicates that the usage of non-standard headers has become increasingly common. All non-standard headers detected by our Node.js program are included in the full-data.json file included in the submission. 
+}
+
+\textcolor{red}{
+A third of endpoints in the 2014 study were shown to be Forgetting Hypermedia \cite{design}. In our study, none had this antipattern. Our detection method only checks if there are links, it does not check if the links are relevant. So it is possible that our detection method could have missed some instances of not properly linking to relevant resources. Even so, we followed the same rule for detection of this antipattern as in the study by Palma et al. \cite{design}, so this result indicates that APIs have become much better at providing links in response bodies.
+}
+
+\textcolor{red}{
+29\% of the endpoints in the 2014 study were shown to be Ignoring Caching \cite{design}. In our study, none had this antipattern. This results indicates that APIs have gotten much better at properly utilizing caching. 
+}
+
+\textcolor{red}{
+Regarding the design antipatterns Ignoring MIME Types and Ignoring Status Code, the occurrences in our study was similar to the occurrences in the 2014 study \cite{design}. The results indicate that around 30\% of APIs are using non-standard MIME types but that using Status Codes incorrectly is rare. However, our method for detecting incorrect use of status codes is quite crude and simple, with a more sophisticated detection method, it is possible that more instances of incorrectly using status codes would have been identified. 
+}
+
+\textcolor{red}{
+Only 3\% of endpoints in the 2014 study were shown to be Misusing Cookies \cite{design}. With a 31\% occurrence of this antipattern in our study, this indicates that Misusing Cookies, i.e. using cookies, has become more common among APIs. 
+}
 
 \clearpage
 \newpage

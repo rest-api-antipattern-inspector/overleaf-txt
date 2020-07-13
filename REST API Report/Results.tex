@@ -1,5 +1,36 @@
 \section{Results}
 
+\textcolor{red}{We ran our detection tools on 326 endpoints. Table \ref{tab:Design antipatterns found} shows the amount and rounded percentages of detected design antipatterns. Table \ref{tab:Linguistic antipatterns found} shows the amount and rounded percentages of detected linguistic antipatterns.}
+
+\begin{table}[htb!]
+    \centering
+    \begin{tabular}{|c|c|c|} \hline
+       Design antipattern & amount & rounded percentage of all endpoints \\ \hline
+        Breaking Self-descriptiveness & 317 & 97\%  \\ \hline
+        Misusing Cookies & 100 & 31\%  \\ \hline
+        Ignoring MIME Types & 89 & 27\%  \\ \hline
+        Ignoring Status Code & 4 & 1\%  \\ \hline
+        Forgetting Hypermedia & 0 & 0\%  \\ \hline
+        Ignoring Caching & 0 & 0\%  \\ \hline
+    \end{tabular}
+    \caption{Design antipatterns found}
+    \label{tab:Design antipatterns found}
+\end{table}
+
+\begin{table}[htb!]
+    \centering
+    \begin{tabular}{|c|c|c|} \hline
+        Linguistic antipattern & amount & rounded percentage of all endpoints  \\ \hline
+        Contextless Resource Names & 57 & 17\%  \\ \hline
+        Pluralised Nodes & 39 & 12\% \\ \hline
+        Amorphous URIs & 36 & 11\% \\ \hline
+        CRUDy URIs & 28 & 9\% \\ \hline
+        Non-hierarchical Nodes & 0 & 0\% \\ \hline
+    \end{tabular}
+    \caption{Linguistic antipatterns found}
+    \label{tab:Linguistic antipatterns found}
+\end{table}
+
 Examples of results of antipatterns and patterns found in two of our APIs Twitter and GitHub are illustrated below in Figures \ref{fig:githubBarAntiEx}, \ref{fig:githubBarPattEx}, \ref{fig:twitterBarAntiEx}, and \ref{fig:twitterBarPattEx}. For the complete results on the detection of patterns and antipatterns for all analysed API endpoints, see Appendix 1. Each endpoint can contain multiple antipatterns or patterns. We performed the detection of eleven antipatterns and eight patterns.
 
 \begin{figure}[htb!]
@@ -32,7 +63,109 @@ Examples of results of antipatterns and patterns found in two of our APIs Twitte
 
 \clearpage
 
-\subsection{RQ1: Is there a relation between design and linguistic quality in RESTful APIs?}
+\subsection{Design antipattern examples}
+
+\textcolor{red}{Table \ref{tab:Examples of findings of the design antipattern Breaking Self-Descriptiveness} shows examples of headers found to be non-standard and thus considered to have the design antipattern Breaking Self-descriptiveness, one for each API is shown. }
+
+\begin{table}[htb!]
+    \centering
+    \begin{tabular}{|c|c|c|}
+    \hline
+     API & endpoint & header \\ \hline
+     Bitly & /bitlinks/{BITLINK}/clicks & content-security-policy \\ \hline
+     Imgur & /account/{username}/albums/ids/{page} & x-ratelimit-clientlimit \\ \hline
+     Nasa & /neo/rest/v1/feed & x-ratelimit-limit \\ \hline
+     Spotify & /shows/{id}/episodes & x-robots-tag \\ \hline
+     GitHub & repositories & x-accepted-oauth-scopes \\ \hline
+     Disqus & forums/details.json & x-ratelimit-remaining \\ \hline
+     Twitter & favorites/create & status \\ \hline
+     StackExchange & users/{id}/tags/{tags}/top-questions & x-request-guid \\ \hline
+     Facebook & {user-id}/accounts & x-fb-debug \\ \hline
+     Vimeo & groups & request-hash \\ \hline
+    \end{tabular}
+    \caption{Examples of findings of the design antipattern Breaking Self-Descriptiveness}
+    \label{tab:Examples of findings of the design antipattern Breaking Self-Descriptiveness}
+\end{table}
+
+\subsection{Linguistic antipattern examples}
+
+\textcolor{red}{Table \ref{tab:Examples of linguistic antipatterns found.} shows examples of linguistic antipatterns found, one per API the antipattern was detected in. After manual review of the detected Contextless Resource Names, we deem that many of them are not actually contextless, many of them can be considered contextual with knowledge of the purpose, content and context of that particular API. Among the examples of detected Contextless Resource Names that are listed in table \ref{tab:Examples of linguistic antipatterns found.}, those that we deem clearly incorrectly identified as context less are particularly the examples for Bitly, Facebook, GitHub, Imgur, Spotify, StackExchange, Twitter and Vimeo. These are not the only endpoints identified as Contextless Resource Names that we deem have been incorrectly identified, these are just some examples. }
+
+\begin{table}[htb!]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        API & linguistic antipattern & endpoint \\ \hline
+        Disqus & CRUDy URIs & /users/updateProfile.json \\  \hline
+        Twitter & CRUDy URIs & /statuses/update \\ \hline
+        Nasa & CRUDy URIs & \textcolor{red}{/search} \\  \hline
+        Spotify & CRUDy URIs & \textcolor{red}{/search} \\  \hline
+        Disqus & Amorphous URIs & /threads/create.json \\ \hline
+        Bitly & Contextless Resource Names & /bitlinks/{BITLINK}/clicks \\ \hline
+        Facebook & Contextless Resource Names & /\{user-id\}/taggable\_friends \\ \hline
+        GitHub & Contextless Resource Names & /repos/\{owner\}/\{repo\}/languages \\ \hline
+        Imgur & Contextless Resource Names & /account/\{username\}/notifications/replies \\ \hline
+        Nasa & Contextless Resource Names & /mars-photos/api/v1/rovers/curiosity/photos \\ \hline
+        Spotify & Contextless Resource Names &
+        /playlists/\{playlist\_id\}/followers/contains \\ \hline
+        StackExchange & Contextless Resource Names & /users/moderators/elected \\ \hline
+        Twitter & Contextless Resource Names & /mutes/users/ids \\ \hline
+        Vimeo & Contextless Resource Names &
+        /channels/\{channel\_id\}/moderators \\ \hline
+    \end{tabular}
+    \caption{Examples of linguistic antipatterns found.}
+    \label{tab:Examples of linguistic antipatterns found.}
+\end{table}
+
+\textcolor{red}{
+Table \ref{tab:Examples of Pluralised Nodes found.} shows some examples of endpoints where the linguistic antipattern Pluralised Nodes was identified that we deem to have been identified correctly. However, table \ref{tab:Examples of manually determined incorrect detection results of Pluralised Nodes found.} shows two examples of identified Pluralised Nodes that we (after manual review) deem to have been incorrectly identified as such, the last nodes in those, "bitlinks" and "projects" are clearly plural and not singular which is what the SARA program has identified them as.
+}
+
+\begin{table}[htb!]
+    \centering
+    \begin{tabular}{|c|c|} \hline
+       API  & Pluralised Nodes found \\ \hline
+       Bitly & POST  /expand [Singular last node with POST method.] \\ \hline
+       Disqus & POST  /threads/create.json [Singular last node with POST method.] \\ \hline
+       Imgur & POST  /image/\{imageHash\} [Singular last node with POST method.] \\ \hline
+       Twitter & POST  /favorites/destroy [Singular last node with POST method.] \\ \hline
+    \end{tabular}
+    \caption{Examples of Pluralised Nodes found.}
+    \label{tab:Examples of Pluralised Nodes found.}
+\end{table}
+
+\begin{table}[htb!]
+    \centering
+    \begin{tabular}{|c|c|} \hline
+       API  & incorrect detection result of Pluralised Nodes found \\ \hline
+       Bitly & POST  /bitlinks [Singular last node with POST method.] \\ \hline
+       GitHub & POST  /repos/\{owner\}/\{repo\}/projects [Singular last node with POST method.] \\ \hline
+    \end{tabular}
+    \caption{Examples of incorrect detection results of Pluralised Nodes antipattern found.}
+    \label{tab:Examples of manually determined incorrect detection results of Pluralised Nodes found.}
+\end{table}
+
+\textcolor{red}{
+Table \ref{tab:Examples of manually determined incorrect detection results of Verbless URIs pattern found} shows some examples of endpoints from the Disqus API that the SARA program identified as having the linguistic pattern Verbless URIs. However, after manual review, we deem that they clearly have the antipattern CRUDy URIs. This is because they contain the terms create and update, signaling actions that should not depend on such terms in the URI nodes but instead on the HTTP method used \cite{linguistic}. As seen in table \ref{tab:Examples of linguistic antipatterns found.}, the SARA program did successfully identify one of the URIs from Disqus as CRUDy, but the ones in table \ref{tab:Examples of manually determined incorrect detection results of Verbless URIs pattern found} were missed for reasons we do not know, we will discuss the implication of this and the other flaws later in the report.
+}
+
+\begin{table}[]
+    \centering
+    \begin{tabular}{|c|c|} \hline
+        API & endpoint \\ \hline
+        Disqus & /threads/create.json \\ \hline
+        Disqus & /posts/create.json \\ \hline
+        Disqus & /threads/update.json \\ \hline
+    \end{tabular}
+    \caption{Examples of manually determined incorrect detection results of Verbless URIs pattern found}
+    \label{tab:Examples of manually determined incorrect detection results of Verbless URIs pattern found}
+\end{table}
+
+\textcolor{red}{Included with the submission of this report will be a json file called full-data.json. In full-data.json, all endpoints used for this research are listed with boolean properties for all patterns and antipatterns, showing true if the (anti)pattern has been detected and false if not. All non-standard headers detected are also listed for each endpoint in full-data.json.}
+
+\clearpage
+
+\subsection{RQ1: Is there a relation between design and linguistic quality in RESTful APIs?} \label{overallstats}
 
 \begin{table}[ht!]
 \scriptsize
@@ -247,8 +380,6 @@ The results in Table \ref{tab:Linguisticvsdesignantipatterns} indicate a moderat
 
 Further indications of the result show that the  Amorphous URIs linguistic antipattern has a weak negative relation between both the  Misusing Cookies design antipattern and the Ignoring MIME Types design antipattern. 
 
-\clearpage
-
 \subsection{RQ1.2: Is there a relation between design patterns and linguistic antipatterns in RESTful APIs?}
 
 \begin{table}[ht!]
@@ -294,8 +425,6 @@ Singularised Nodes vs Content Negotiation & -0.0985
 
 
 Our result from Table \ref{tab:Linguisticvsdesignpatterns} indicate a weak negative relation between the design pattern Content Negotiation and the linguistic pattern Tidy URIs. 
-
-\clearpage
 
 \subsection{RQ1.3: Is there a relation between design antipatterns and linguistic patterns in RESTful APIs?}
 
@@ -373,8 +502,6 @@ Singularised Nodes vs Misusing Cookies & -0.1852
 This result Table of \ref{tab:Linguisticpatternsvsdesignantipatterns} show a weak positive relations between the Tidy URIs linguistic pattern and the  Ignoring MIME Types and Misusing Cookies design antipatterns. 
 
 Also a moderate negative relation between the  Verbless URIs linguistic pattern and the  Misusing Cookies design antipattern. Our results also indicate a weak negative relation between the  Contextualised Resource linguistic pattern and the  Ignoring Status Code design antipattern.
-
-\clearpage
 
 \subsection{RQ1.4: Is there a relation between design- and linguistic patterns in RESTful APIs?}
 
