@@ -4,42 +4,34 @@ In this study, we analysed API endpoints against a set of rules for detecting pa
 
 The aim of this study has been to increase the awareness of these quality issues for those who develops REST APIs, and mainly public REST APIs that other developers uses to integrate into their applications. Following standards REST principles is important for public APIs.  It helps developers who want to integrate these into their own applications to easier understand how they work.
 
-\textcolor{red}{
 The problem  formulation for this study was if there is a statistical relation between design and linguistic quality in RESTful APIs. Our detection of linguistic quality with our implementation of the SARA program proved to be unreliable. We could therefore not answer the problem formulation. 
-}
 
-\textcolor{red}{
+ 
 One thing we can conclude is that if the SARA program is going to be used for future studies, validation that it is working correctly is necessary.
-}
 
-\textcolor{red}{
-We validated the Node.js program we created for detecting design quality with automated unit tests, as described and discussed in our Reliability and Validity subsection \ref{Reliability and Validity} in the method. Since we detected such a high occurrence (97\%) of the design antipattern Breaking Self-descriptiveness, we stored all non-standard headers found in the file full-data.json that will be included in the submission of this report. Through our unit tests, we did at least not find any evidence of our design quality detection program would not be behaving as expected. 
-}
+ 
+We validated the Node.js program we created for detecting design quality with automated unit tests, as described and discussed in our Reliability and Validity subsection \ref{Reliability and Validity} in the method. Since we detected such a high occurrence (97\%) of the design antipattern Breaking Self-descriptiveness, we stored all non-standard headers found in the file full-data.json that will be included in the submission of this report.
 
-\textcolor{red}{
+ 
 We found non-standard headers among almost all endpoints. One reason to avoid antipatterns in APIs is that those can make APIs behave unexpectedly and thereby make them more difficult to use. But since this is now so common, it might be expected that there will be some custom headers, and especially if they are following the convention of having the header name prefixed with "x-", this might not be much of a problem.
-}
 
-\textcolor{red}{
+ 
 Our result indicates that the usage of cookies in APIs has increased compared to earlier research \cite{design}. This is a problem because it goes against the original idea in REST that the communications should be stateless \cite{restdissertation}\cite{design}.
-}
 
-\textcolor{red}{
+ 
 Our result indicates that APIs have become much better at providing links in response bodies compared to earlier research \cite{design}. This is a good sign since providing relevant links that can simplify the navigation through the API is important for making an API easy to use. However, our detection of this did not check if the links were relevant, only if there were any links. So it is possible that our detection method could have missed some instances of not properly linking to relevant resources.
-}
 
-\textcolor{red}{
+ 
 Our result indicates that APIs have become much better at utilizing caching compared to earlier research \cite{design}. This is good because caching can remove the need for unnecessary repetetive requests. 
-}
 
-
-\textcolor{blue}{The result of the research is very dependent on our detection functions and how accurately they detect a pattern or antipattern. Some detection functions might be too strict and include endpoints that are debatable if they should be considered antipattern - thinking about standard headers for example - while others might be to loose like forgetting hypermedia. The difficulty to detect non-hierarchical nodes is also a concerned needed to be raised for future work.}
+The result of the research is very dependent on our detection functions and how accurately they detect a pattern or antipattern. Some detection functions might be too strict and include endpoints that are debatable if they should be considered antipattern - thinking about standard headers for example - while others might be to loose like forgetting hypermedia.
 
 \subsection{Future Work}
 \label{futureWork}
 
-To make our result more reliable, there is a need for verifying some of the detection methods used. Most notably Non-hierarchical Nodes and Forgetting Hypermedia. The reason for this is that Forgetting Hypermedia is hard to make a 100\% good script for detection of this antipattern. Looking for object keys in the body that contains "url","links" and their synonyms might be to loose since these fields could contain values that do not point to other resources within the API. 
+To make our result more reliable, there is a need for verifying some of the detection methods used. Most notably linguistic methods and Forgetting Hypermedia. The reason for this is that Forgetting Hypermedia is hard to make a 100\% good script for detection of this antipattern. Looking for object keys in the body that contains "href","link" and their synonyms might be to loose since these fields could contain values that do not point to other resources within the API. 
 
-Since our detection of Non-hierarchical Nodes differed so much from Palma et al. \cite{linguistic} result there must be a raised concern that this detection algorithm might need some more verification before used. Or, at least some investigation why they got such high detection rate using the same tool. \textcolor{blue}{Another solution would be to just verify the linguistic part manually. Since it is only necessary to iterate once through each API to look for these antipatterns in the URIs it might take less effort than writing good detection functions, which always can produce false positives or not detecting correctly.}
+ 
+Since our detection of linguistic quality was unreliable there must be a raised concern that the Java program used might need some more verification before used. Another solution would be to just verify the linguistic part manually. Since it is only necessary to iterate once through each API to look for these antipatterns in the URIs it might take less effort than writing good detection functions, which always can produce false positives or not detecting correctly.
 
 Another way for making the results more reliable would be to include more APIs and endpoints. 326 endpoints where used in this study over ten different APIs. There is another research being conducted that look for relation between linguistic quality and design quality in Googles APIs. That study used its own methods for design antipattern detection. A comparison of their results with this research to validate each others detection functions could be made. Also the combined findings from both of these studies might produced a more accurate result.

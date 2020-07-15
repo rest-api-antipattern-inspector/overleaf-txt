@@ -4,23 +4,21 @@ We have collected endpoints from ten different REST APIs and implemented the det
 
 We have created a Node.js program for making HTTP requests to the selected API endpoints and check for REST design antipatterns. For detecting linguistic patterns and antipatterns the Java program created by Palma et al. for their study of linguistic REST antipatterns \cite{linguistic} for checking for those types of patterns and antipatterns in the endpoints was used. 
 
-To answer RQ1 we have performed a Chi-Square test on the design quality data \textit{vs.} the linguistic quality data, see table \ref{contingencytable} for more about the Chi-Square test. To answer the other research questions, we have performed pairwise Phi coefficient analyses. \textcolor{red}{The list below describes the steps in our research method.}
+To answer RQ1 we have performed a Chi-Square test on the design quality data \textit{vs.} the linguistic quality data, see table \ref{contingencytable} for more about the Chi-Square test. To answer the other research questions, we have performed pairwise Phi coefficient analyses.The list below describes the steps in our research method.
 
 \begin{enumerate}
-    \item Collect endpoints from 10 different APIs. \textcolor{blue}{Because of time constraint we have to limit the amount of APIs to include. \textcolor{red}{Our supervisor recommenced using at least 10 different APIs.} See \ref{APIsusedintheresearch} for full list.}
-    \item Define rules for linguistic and design patterns/antipatterns. \textcolor{blue}{ We need to define rules for implementing our detection functions. The rules will be based on earlier literature on the subject \cite{design} \cite{linguistic}. See subsections \ref{desidnAntipatterns}, \ref{designPatterns}, \ref{linguisticAntipatterns} and \ref{linguisticPatterns} for all rules defined.}
-    \item Write functionality in Node.js for detecting design quality in API endpoints and storing the results. \textcolor{blue}{We use the Node.js platform for making our HTTP request calls from.}
-    \item Prepare the Java program SARA for detecting linguistic quality in our collected endpoints. \textcolor{blue}{The JAVA program SARA has been developed and used in earlier research for detecting linguistic quality \cite{linguistic}.}
-        \item Run programs with our collected endpoints to detect design and linguistic quality as well as store the result. \textcolor{blue}{The result will be used for statistical analysis to determine the relation between linguistic and design quality.} More details about this in the implementation chapter. 
-    \item For answering RQ1: What is the relationship between design and linguistic quality? Perform Chi-Square analysis on the design quality data vs linguistic quality data. \textcolor{red}{See subsection \ref{statistics} for the motivation for this statistical analysis. }
-        \item For answering RQ1.1 - RQ1.4: Run pairwise phi coefficient tests between each combination of pattern and antipattern. \textcolor{red}{See subsection \ref{statistics} for the motivation for this type of statistical analysis. }
+    \item Collect endpoints from 10 different APIs. Because of time constraint we have to limit the amount of APIs to include. Our supervisor recommenced using at least 10 different APIs. See \ref{APIsusedintheresearch} for full list.
+    \item Define rules for linguistic and design patterns/antipatterns. We need to define rules for implementing our detection functions. The rules will be based on earlier literature on the subject \cite{design} \cite{linguistic}. See subsections \ref{desidnAntipatterns}, \ref{designPatterns}, \ref{linguisticAntipatterns} and \ref{linguisticPatterns} for all rules defined.
+    \item Write functionality in Node.js for detecting design quality in API endpoints and storing the results. We use the Node.js platform for making our HTTP request calls from.
+    \item Prepare the Java program SARA for detecting linguistic quality in our collected endpoints. The JAVA program SARA has been developed and used in earlier research for detecting linguistic quality \cite{linguistic}.
+        \item Run programs with our collected endpoints to detect design and linguistic quality as well as store the result. The result will be used for statistical analysis to determine the relation between linguistic and design quality. More details about this in the implementation chapter. 
+    \item For answering RQ1: What is the relationship between design and linguistic quality? Perform Chi-Square analysis on the design quality data vs linguistic quality data. See subsection \ref{statistics} for the motivation for this statistical analysis. 
+        \item For answering RQ1.1 - RQ1.4: Run pairwise phi coefficient tests between each combination of pattern and antipattern. See subsection \ref{statistics} for the motivation for this type of statistical analysis.
 \end{enumerate}
 
 \subsection{APIs Used for the Study} \label{selectedAPIs}
 
-\textcolor{red}{
 We selected ten REST APIs for this study. We mosly based our selection of these on the APIs used in previous research by Palma et al. \cite{design}\cite{linguistic}. For some APIs used by Palma et al., we selected other similar APIs as alternatives. The APIs we selected are listed below with links to their documentations in footnotes and with our motivations for selecting them. 
-}
 
 \begin{itemize}
 \label{APIsusedintheresearch}
@@ -46,9 +44,9 @@ Our implementation of Chi-Square is discussed further in subsection \ref{overall
 
 To increase the reliability, our study includes several appendixes, for example, links to repositories/downloads of the source code used (with documentation for how to use it), as well as a document of all the API endpoints used. This will make it possible for others to recreate and inspect the research conducted. 
 
-We have written unit tests for the antipattern detection methods in the Node.js program for detecting REST design antipatterns. \textcolor{blue}{These will be called with mocked network responses that contains antipatterns to verify that our implementation is correct. They will also be provided with responses that do not contain antipatterns to avoid false positives.}
+We have written unit tests for the antipattern detection methods in the Node.js program for detecting REST design antipatterns. These will be called with mocked network responses that contain antipatterns to verify that our implementation is correct. They will also be provided with responses that do not contain antipatterns to avoid false positives.
 
-\textcolor{blue}{The result from the JAVA program SARA which measures the linguistic quality in APIs needs to be verified. This will be done by verifying the correctness of a sample of endpoints tested through the program and see if those endpoints that had a detected antipattern was not a false positive and vice versa.}
+The result from the JAVA program SARA which measures the linguistic quality in APIs needs to be verified. This will be done by verifying the correctness of a sample of endpoints tested through the program and see if those endpoints that had a detected antipattern was not a false positive and vice versa.
 
 One reliability risk is that the API versions used might become outdated and replaced with new versions. The API versions used have therefore been listed to let future researchers that might want to replicate our findings know which API versions were used. Hopefully the API versions we used will still be supported.
 
@@ -57,9 +55,6 @@ The biggest challenge will be to achieve a high validity. Time is a limited reso
 
 Another threat to validity is that our findings might become less relevant if the problems found are fixed in later versions. However, even if the results would become significantly different in future versions, the result of this study would still provide a snapshot of current conditions. 
 
-\textcolor{red}{
 The APIs selected for this study are listed and motivated in subsection \ref{selectedAPIs}. We mostly based the selection of these APIs on the APIs used in previous research by Palma et al. \cite{design}\cite{linguistic}, as discussed, for some APIs used in the previous research, we selected similar APIs as alternatives. We selected some of the APIs used by Palma et al. to make our results comparable. We also strove to select APIs that are widely known and we also strove to have a variety in the selection. With a variety of widely known APIs we hoped to achieve a high validity.
-}
 
-\clearpage
 \newpage
